@@ -34,7 +34,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
           boxShadow: "none",
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -46,6 +46,9 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
           </IconButton>
           <Typography variant="h4" noWrap component="div" fontWeight="bold">
             Hello, user! <WavingHandIcon sx={{ color: "#FBCB49" }} />
+          </Typography>
+          <Typography variant="h6" noWrap component="div" fontWeight="bold">
+            Data
           </Typography>
         </Toolbar>
       </AppBar>
