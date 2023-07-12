@@ -26,11 +26,9 @@ enum Finances {
 }
 
 export default function Dashboard() {
-  const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [newMoney, setNewMoney] = useState<Finances>(Finances.expanse);
 
   const handleToggleSwitch = (money: Finances) => {
-    setIsSwitchOn(!isSwitchOn);
     setNewMoney(money);
   };
 
@@ -77,7 +75,9 @@ export default function Dashboard() {
       </Grid>
       <Box justifyContent="center" display="flex" marginY={6}>
         <Button
-          variant={`${isSwitchOn ? "contained" : "outlined"}`}
+          variant={`${
+            newMoney === Finances.expanse ? "contained" : "outlined"
+          }`}
           sx={{
             color: "#000",
             mr: 2,
@@ -90,7 +90,7 @@ export default function Dashboard() {
           Add expanse
         </Button>
         <Button
-          variant={`${isSwitchOn ? "outlined" : "contained"}`}
+          variant={`${newMoney === Finances.income ? "contained" : "outlined"}`}
           sx={{
             color: "#000",
             border: 1,
@@ -109,51 +109,55 @@ export default function Dashboard() {
         marginTop={4}
         spacing={2}
       >
-        <Grid item>
-          <Button
-            variant="outlined"
-            startIcon={<ShoppingBasketOutlinedIcon />}
-            sx={{ color: "black" }}
-          >
-            Groceries
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="outlined"
-            startIcon={<RestaurantOutlinedIcon />}
-            sx={{ color: "black" }}
-          >
-            Restaurant
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="outlined"
-            startIcon={<TheatersOutlinedIcon />}
-            sx={{ color: "black" }}
-          >
-            Entertainment
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="outlined"
-            startIcon={<DirectionsBusFilledOutlinedIcon />}
-            sx={{ color: "black" }}
-          >
-            Transport
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="outlined"
-            startIcon={<LocalHospitalOutlinedIcon />}
-            sx={{ color: "black" }}
-          >
-            Health
-          </Button>
-        </Grid>
+        {newMoney === Finances.expanse && (
+          <>
+            <Grid item>
+              <Button
+                variant="outlined"
+                startIcon={<ShoppingBasketOutlinedIcon />}
+                sx={{ color: "black" }}
+              >
+                Groceries
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                startIcon={<RestaurantOutlinedIcon />}
+                sx={{ color: "black" }}
+              >
+                Restaurant
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                startIcon={<TheatersOutlinedIcon />}
+                sx={{ color: "black" }}
+              >
+                Entertainment
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                startIcon={<DirectionsBusFilledOutlinedIcon />}
+                sx={{ color: "black" }}
+              >
+                Transport
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                startIcon={<LocalHospitalOutlinedIcon />}
+                sx={{ color: "black" }}
+              >
+                Health
+              </Button>
+            </Grid>
+          </>
+        )}
       </Grid>
     </>
   );
