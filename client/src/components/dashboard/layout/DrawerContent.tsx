@@ -35,7 +35,7 @@ export const DrawerContent = () => {
     >
       <Toolbar>
         <Typography variant="h6" noWrap component="div">
-          Financial app
+          Budget Buddy
         </Typography>
       </Toolbar>
       <Divider />
