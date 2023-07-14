@@ -1,34 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import * as moment from 'moment';
 import { PaymentType } from './dtos/create-income.dto';
-
-const incomes = [
-  {
-    id: 1,
-    incomeType: 'salary',
-    amount: 1234,
-    currency: 'pln',
-    date: moment().format('DD.MM.YYYY'),
-    paymentType: PaymentType.card, //or cash
-  },
-  {
-    id: 2,
-    incomeType: 'salary',
-    amount: 133,
-    currency: 'pln',
-    date: moment().format('DD.MM.YYYY'),
-    paymentType: PaymentType.cash, //or cash
-  },
-];
+import { InjectRepository } from '@nestjs/typeorm';
+import { Incomes } from './incomes.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class IncomesService {
+  constructor(@InjectRepository(Incomes) private repo: Repository<Incomes>) {}
+
   getIncomes() {
-    return incomes;
+    return this.repo.find();
   }
+
   getIncomeById(id: number) {
-    return incomes.find((x) => x.id === id);
+    return this.repo.findOneBy({ id });
   }
+
   addIncome(
     incomeType: string,
     amount: number,
@@ -36,9 +23,14 @@ export class IncomesService {
     date: string,
     paymentType: PaymentType,
   ) {
-    const id = Math.round(Math.random() * 1000);
-    const newIncome = { id, incomeType, amount, currency, date, paymentType };
-    incomes.push(newIncome);
-    return newIncome;
+    const newIncome = this.repo.create({
+      incomeType,
+      amount,
+      currency,
+      date,
+      paymentType,
+    });
+
+    return this.repo.save(newIncome);
   }
 }
