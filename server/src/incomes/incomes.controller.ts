@@ -21,12 +21,6 @@ export class IncomesController {
     @Body()
     body: CreateIncomeDto,
   ) {
-    return this.incomesService.addIncome(
-      body.incomeType,
-      body.amount,
-      body.currency,
-      body.date,
-      body.paymentType,
-    );
+    return this.incomesService.addIncome(body);
   }
 }

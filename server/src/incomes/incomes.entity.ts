@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { PaymentType } from './dtos/create-income.dto';
 
 @Entity()
-export class Incomes {
+export class Income {
   @PrimaryGeneratedColumn()
   id: number;
 

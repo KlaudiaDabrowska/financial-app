@@ -5,7 +5,7 @@ export class CreateIncomeTable1689336667051 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE IF NOT EXISTS incomes (
+      `CREATE TABLE IF NOT EXISTS income (
             "id" SERIAL NOT NULL, 
             "income_type" character varying NOT NULL, 
             "amount" integer NOT NULL, 
@@ -18,6 +18,6 @@ export class CreateIncomeTable1689336667051 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE IF EXSISTS incomes`);
+    await queryRunner.query(`DROP TABLE IF EXSISTS income`);
   }
 }

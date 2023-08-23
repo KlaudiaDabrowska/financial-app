@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { PaymentType } from './dtos/create-income.dto';
+import { CreateIncomeDto } from './dtos/create-income.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Incomes } from './incomes.entity';
+import { Income } from './incomes.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class IncomesService {
-  constructor(@InjectRepository(Incomes) private repo: Repository<Incomes>) {}
+  constructor(@InjectRepository(Income) private repo: Repository<Income>) {}
 
   getIncomes() {
     return this.repo.find();
@@ -16,20 +16,8 @@ export class IncomesService {
     return this.repo.findOneBy({ id });
   }
 
-  addIncome(
-    incomeType: string,
-    amount: number,
-    currency: string,
-    date: string,
-    paymentType: PaymentType,
-  ) {
-    const newIncome = this.repo.create({
-      incomeType,
-      amount,
-      currency,
-      date,
-      paymentType,
-    });
+  addIncome(createIncomeDto: CreateIncomeDto) {
+    const newIncome = this.repo.create({ ...createIncomeDto });
 
     return this.repo.save(newIncome);
   }

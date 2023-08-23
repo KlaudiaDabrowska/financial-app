@@ -5,6 +5,12 @@ export enum PaymentType {
   card = 'card',
 }
 
+export enum Currency {
+  PLN = 'PLN',
+  USD = 'USD',
+  GBP = 'GBP',
+}
+
 export class CreateIncomeDto {
   @IsString()
   @IsNotEmpty()
@@ -15,6 +21,7 @@ export class CreateIncomeDto {
   amount: number;
 
   @IsString()
+  @IsEnum(Currency)
   currency = 'PLN';
 
   @IsString()
