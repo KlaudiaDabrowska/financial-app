@@ -1,11 +1,11 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
-  return (
-    <main>
+	return (
+		<main>
       Strona do logowania
-      <Link href="/dashboard">Dashboard</Link>
-    </main>
-  );
+			<Link href="/dashboard">Dashboard</Link>
+		</main>
+	);
 }

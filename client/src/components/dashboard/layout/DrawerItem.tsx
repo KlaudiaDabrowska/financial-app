@@ -1,7 +1,7 @@
-import { drawerWidth } from "@/lib/helpers/drawerWidth";
-import { Box } from "@mui/material";
-import Drawer from "@mui/material/Drawer";
-import { DrawerContent } from "./DrawerContent";
+import { Box } from '@mui/material';
+import Drawer from '@mui/material/Drawer';
+import { DrawerContent } from './DrawerContent';
+import { drawerWidth } from '@/lib/helpers/drawerWidth';
 
 interface IDrawerItemProps {
   handleDrawerToggle: () => void;
@@ -9,45 +9,45 @@ interface IDrawerItemProps {
 }
 
 export const DrawerItem = ({
-  handleDrawerToggle,
-  mobileOpen,
+	handleDrawerToggle,
+	mobileOpen,
 }: IDrawerItemProps) => {
-  return (
-    <Box
-      component="nav"
-      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-      aria-label="mailbox folders"
-    >
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true,
-        }}
-        sx={{
-          display: { xs: "block", sm: "none" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: drawerWidth,
-          },
-        }}
-      >
-        <DrawerContent />
-      </Drawer>
-      <Drawer
-        variant="permanent"
-        sx={{
-          display: { xs: "none", sm: "block" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: drawerWidth,
-          },
-        }}
-        open
-      >
-        <DrawerContent />
-      </Drawer>
-    </Box>
-  );
+	return (
+		<Box
+			component="nav"
+			sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+			aria-label="mailbox folders"
+		>
+			<Drawer
+				variant="temporary"
+				open={mobileOpen}
+				onClose={handleDrawerToggle}
+				ModalProps={{
+					keepMounted: true,
+				}}
+				sx={{
+					display: { xs: 'block', sm: 'none' },
+					'& .MuiDrawer-paper': {
+						boxSizing: 'border-box',
+						width: drawerWidth,
+					},
+				}}
+			>
+				<DrawerContent />
+			</Drawer>
+			<Drawer
+				variant="permanent"
+				sx={{
+					display: { xs: 'none', sm: 'block' },
+					'& .MuiDrawer-paper': {
+						boxSizing: 'border-box',
+						width: drawerWidth,
+					},
+				}}
+				open
+			>
+				<DrawerContent />
+			</Drawer>
+		</Box>
+	);
 };

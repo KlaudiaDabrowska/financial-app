@@ -1,4 +1,4 @@
-import { Alert, AlertColor, Snackbar } from "@mui/material";
+import { Alert, AlertColor, Snackbar } from '@mui/material';
 
 interface ISnackbarProps {
   openSnackbar: boolean;
@@ -8,22 +8,22 @@ interface ISnackbarProps {
 }
 
 export const SnackbarInfo = ({
-  openSnackbar,
-  handleCloseSnackbar,
-  severity,
-  message,
+	openSnackbar,
+	handleCloseSnackbar,
+	severity,
+	message,
 }: ISnackbarProps) => (
-  <Snackbar
-    open={openSnackbar}
-    autoHideDuration={6000}
-    onClose={handleCloseSnackbar}
-  >
-    <Alert
-      onClose={handleCloseSnackbar}
-      severity={severity}
-      sx={{ width: "100%" }}
-    >
-      {message}
-    </Alert>
-  </Snackbar>
+	<Snackbar
+		open={openSnackbar}
+		autoHideDuration={6000}
+		onClose={handleCloseSnackbar}
+	>
+		<Alert
+			onClose={handleCloseSnackbar}
+			severity={severity}
+			sx={{ width: '100%' }}
+		>
+			{message}
+		</Alert>
+	</Snackbar>
 );

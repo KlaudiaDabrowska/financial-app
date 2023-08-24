@@ -1,4 +1,4 @@
-import { PaymentType } from "./Finances";
+import { PaymentType } from './Finances';
 
 export interface INewIncome {
   incomeType: string;
