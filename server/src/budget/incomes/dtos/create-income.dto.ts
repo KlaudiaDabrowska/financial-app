@@ -1,15 +1,5 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
-
-export enum PaymentType {
-  cash = 'cash',
-  card = 'card',
-}
-
-export enum Currency {
-  PLN = 'PLN',
-  USD = 'USD',
-  GBP = 'GBP',
-}
+import { Currency, PaymentType } from 'src/budget/shared/types/finance';
 
 export class CreateIncomeDto {
   @IsString()

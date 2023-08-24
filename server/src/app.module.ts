@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { IncomesModule } from './incomes/incomes.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './config/typeorm';
+import { BudgetModule } from './budget/budget.module';
 
 @Module({
   imports: [
-    IncomesModule,
+    BudgetModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeorm],

@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { PaymentType } from './dtos/create-income.dto';
+import { PaymentType } from '../shared/types/finance';
 
 @Entity()
 export class Income {
@@ -9,14 +9,14 @@ export class Income {
   @Column()
   incomeType: string;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   amount: number;
 
   @Column()
   currency: string;
 
   @Column()
-  date: string;
+  date: Date;
 
   @Column()
   paymentType: PaymentType;
