@@ -8,9 +8,9 @@ export class CreateIncomeTable1689336667051 implements MigrationInterface {
       `CREATE TABLE IF NOT EXISTS income (
             "id" SERIAL NOT NULL, 
             "income_type" character varying NOT NULL, 
-            "amount" numeric(200, 4) NOT NULL, 
+            "amount" numeric(10, 2) NOT NULL, 
             "currency" character varying NOT NULL, 
-            "date" date NOT NULL, 
+            "date" timestamp NOT NULL, 
             "payment_type" character varying NOT NULL, 
             CONSTRAINT "PK_d737b3d0314c1f0da5461a55e5e" PRIMARY KEY ("id")
         )`,
