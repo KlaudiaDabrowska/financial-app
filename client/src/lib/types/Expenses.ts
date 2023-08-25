@@ -1,16 +1,16 @@
 import { Currency, PaymentType } from "./Finances";
 
-export interface INewIncome {
-  incomeType: string;
+export interface INewExpense {
+  expenseCategory: string;
   amount: number;
   currency: Currency;
   date: string;
   paymentType: PaymentType;
 }
 
-export interface IIncomeObject {
+export interface IExpenseObject {
   id: number;
-  incomeType: string;
+  expenseCategory: string;
   amount: number;
   currency: Currency;
   date: string;

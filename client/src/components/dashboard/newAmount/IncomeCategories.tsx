@@ -1,4 +1,3 @@
-import AddIcon from "@mui/icons-material/Add";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import { Button, Grid } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
@@ -10,11 +9,11 @@ export const IncomeCategories = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [incomeType, setIncomeType] = useState<string>("");
 
-  const handleOpenModalWithSalary = () => {
-    setOpenModal(true), setIncomeType("Salary");
+  const handleOpenModalWithNewIncome = () => {
+    setOpenModal(true);
   };
 
-  const handleCloseModalWithSalary = () => {
+  const handleCloseModalWithNewIncome = () => {
     setOpenModal(false), setIncomeType("");
   };
 
@@ -36,7 +35,9 @@ export const IncomeCategories = () => {
           variant="outlined"
           startIcon={<ShoppingBasketOutlinedIcon />}
           sx={{ color: "black" }}
-          onClick={handleOpenModalWithSalary}
+          onClick={() => {
+            setIncomeType("Salary"), handleOpenModalWithNewIncome();
+          }}
         >
           Salary
         </Button>
@@ -54,7 +55,7 @@ export const IncomeCategories = () => {
       </Grid> */}
       <AddNewIncomeModal
         open={openModal}
-        handleCloseModalWithSalary={handleCloseModalWithSalary}
+        handleCloseModalWithNewIncome={handleCloseModalWithNewIncome}
         setOpenSnackbar={setOpenSnackbar}
         incomeType={incomeType}
       />

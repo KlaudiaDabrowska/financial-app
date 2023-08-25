@@ -17,31 +17,31 @@ import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import * as Yup from "yup";
-import { createNewIncome } from "@/api/createNewIncome";
+import { createNewExpense } from "@/api/createNewExpense";
 import { Currency, PaymentType } from "@/lib/types/Finances";
 import { style } from "@/styles/modals";
 
-interface IAddNewIncomeModalProps {
+interface IAddNewExpenseModalProps {
   open: boolean;
-  incomeType: string;
-  handleCloseModalWithNewIncome: () => void;
+  expenseCategory: string;
+  handleCloseModalWithNewExpense: () => void;
   setOpenSnackbar: (arg: boolean) => void;
 }
 
-export const AddNewIncomeModal = ({
+export const AddNewExpenseModal = ({
   open,
-  incomeType,
-  handleCloseModalWithNewIncome,
+  expenseCategory,
+  handleCloseModalWithNewExpense,
   setOpenSnackbar,
-}: IAddNewIncomeModalProps) => {
+}: IAddNewExpenseModalProps) => {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
 
   const {
-    mutate: createNewIncomeMutation,
+    mutate: createNewExpenseMutation,
     isSuccess,
     isError,
     reset,
-  } = useMutation(createNewIncome);
+  } = useMutation(createNewExpense);
 
   const formik = useFormik({
     initialValues: {
@@ -61,8 +61,8 @@ export const AddNewIncomeModal = ({
     }),
     onSubmit: (values) => {
       console.log(values);
-      createNewIncomeMutation({
-        incomeType: incomeType,
+      createNewExpenseMutation({
+        expenseCategory: expenseCategory,
         amount: values.amount,
         currency: Currency[values.currency],
         date: values.date,
@@ -90,14 +90,14 @@ export const AddNewIncomeModal = ({
     if (isSuccess) {
       formik.resetForm();
       reset();
-      handleCloseModalWithNewIncome();
+      handleCloseModalWithNewExpense();
       setOpenSnackbar(true);
     }
   }, [
     isSuccess,
     formik,
     reset,
-    handleCloseModalWithNewIncome,
+    handleCloseModalWithNewExpense,
     setOpenSnackbar,
   ]);
 
@@ -107,7 +107,7 @@ export const AddNewIncomeModal = ({
   return (
     <Modal
       open={open}
-      onClose={handleCloseModalWithNewIncome}
+      onClose={handleCloseModalWithNewExpense}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
