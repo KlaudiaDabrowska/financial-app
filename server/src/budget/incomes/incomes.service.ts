@@ -12,7 +12,7 @@ export class IncomesService {
     return this.repo.find();
   }
 
-  getIncomeById(id: number) {
+  getIncomeById(id: string) {
     return this.repo.findOneBy({ id });
   }
 

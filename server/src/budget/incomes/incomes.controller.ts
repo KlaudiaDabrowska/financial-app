@@ -13,7 +13,7 @@ export class IncomesController {
 
   @Get('/:id')
   getIncomeById(@Param('id') id: string) {
-    return this.incomesService.getIncomeById(+id);
+    return this.incomesService.getIncomeById(id);
   }
 
   @Post()

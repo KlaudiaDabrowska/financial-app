@@ -13,7 +13,7 @@ export class ExpensesController {
 
   @Get('/:id')
   getIncomeById(@Param('id') id: string) {
-    return this.expensesService.getExpenseById(+id);
+    return this.expensesService.getExpenseById(id);
   }
 
   @Post()

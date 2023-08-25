@@ -12,7 +12,7 @@ export class ExpensesService {
     return this.repo.find();
   }
 
-  getExpenseById(id: number) {
+  getExpenseById(id: string) {
     return this.repo.findOneBy({ id });
   }
 

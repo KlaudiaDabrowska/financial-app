@@ -1,13 +1,12 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { PaymentType } from '../shared/types/finance';
 
 @Entity()
-export class Income {
+export class Saving {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  incomeType: string;
+  savingCategory: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   amount: number;
@@ -17,7 +16,4 @@ export class Income {
 
   @Column()
   date: Date;
-
-  @Column()
-  paymentType: PaymentType;
 }
