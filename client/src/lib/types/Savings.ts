@@ -1,18 +1,16 @@
 import { Currency, PaymentType } from "./Finances";
 
-export interface INewExpense {
-  expenseCategory: string;
+export interface INewSaving {
+  savingCategory: string;
   amount: number;
   currency: Currency;
   date: string;
-  paymentType: PaymentType;
 }
 
-export interface IExpenseObject {
+export interface ISavingObject {
   id: string;
-  expenseCategory: string;
+  savingCategory: string;
   amount: number;
   currency: Currency;
   date: string;
-  paymentType: PaymentType;
 }

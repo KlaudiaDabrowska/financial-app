@@ -1,11 +1,9 @@
 import {
-  Alert,
   Box,
   Button,
   Grid,
   MenuItem,
   Modal,
-  OutlinedInput,
   Select,
   SelectChangeEvent,
   TextField,
@@ -16,8 +14,16 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import * as Yup from "yup";
 import { createNewIncome } from "@/api/createNewIncome";
+import { currencies } from "@/lib/helpers/forms/currencies";
+import {
+  handleCurrencyChange,
+  handleDateChange,
+  handlePaymentTypeChange,
+} from "@/lib/helpers/forms/handleChanges";
+import { initialValues } from "@/lib/helpers/forms/initialValues";
+import { paymentTypes } from "@/lib/helpers/forms/paymentTypes";
+import { validationSchema } from "@/lib/helpers/forms/validationSchema";
 import { Currency, PaymentType } from "@/lib/types/Finances";
 import { style } from "@/styles/modals";
 
@@ -44,23 +50,9 @@ export const AddNewIncomeModal = ({
   } = useMutation(createNewIncome);
 
   const formik = useFormik({
-    initialValues: {
-      amount: 0,
-      currency: Currency.PLN,
-      paymentType: PaymentType.card,
-      date: "",
-    },
-    validationSchema: Yup.object({
-      amount: Yup.number().positive().required("This field is required"),
-      currency: Yup.string()
-        .oneOf(Object.values(Currency))
-        .required("This field is required"),
-      paymentType: Yup.string()
-        .oneOf(Object.values(PaymentType))
-        .required("This field is required"),
-    }),
+    initialValues: initialValues,
+    validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       createNewIncomeMutation({
         incomeType: incomeType,
         amount: values.amount,
@@ -71,20 +63,20 @@ export const AddNewIncomeModal = ({
     },
   });
 
-  const handleCurrencyChange = (e: SelectChangeEvent) => {
-    const value = e.target.value;
-    formik.setFieldValue("currency", value);
-  };
+  // const handleCurrencyChange = (e: SelectChangeEvent) => {
+  //   const value = e.target.value;
+  //   formik.setFieldValue("currency", value);
+  // };
 
-  const handlePaymentTypeChange = (e: SelectChangeEvent) => {
-    const value = e.target.value;
-    formik.setFieldValue("paymentType", value);
-  };
+  // const handlePaymentTypeChange = (e: SelectChangeEvent) => {
+  //   const value = e.target.value;
+  //   formik.setFieldValue("paymentType", value);
+  // };
 
-  const handleDateChange = (e: any) => {
-    const date = e.$d.toISOString();
-    formik.setFieldValue("date", date);
-  };
+  // const handleDateChange = (e: any) => {
+  //   const date = e.$d.toISOString();
+  //   formik.setFieldValue("date", date);
+  // };
 
   useEffect(() => {
     if (isSuccess) {
@@ -100,9 +92,6 @@ export const AddNewIncomeModal = ({
     handleCloseModalWithNewIncome,
     setOpenSnackbar,
   ]);
-
-  const currencies = [Currency.PLN, Currency.USD, Currency.GBP];
-  const paymentTypes = [PaymentType.card, PaymentType.cash];
 
   return (
     <Modal
@@ -140,7 +129,7 @@ export const AddNewIncomeModal = ({
                 id="currency"
                 name="currency"
                 label="Currency"
-                onChange={handleCurrencyChange}
+                onChange={(e) => handleCurrencyChange(e, formik)}
                 onBlur={formik.handleBlur}
                 value={formik.values.currency}
                 sx={{ width: "100%" }}
@@ -162,7 +151,7 @@ export const AddNewIncomeModal = ({
                 id="payment"
                 name="payment"
                 label="Payment Type"
-                onChange={handlePaymentTypeChange}
+                onChange={(e) => handlePaymentTypeChange(e, formik)}
                 onBlur={formik.handleBlur}
                 value={formik.values.paymentType}
                 sx={{ width: "100%" }}
@@ -180,7 +169,7 @@ export const AddNewIncomeModal = ({
             <Grid item xs={12}>
               <DatePicker
                 value={formik.values.date}
-                onChange={handleDateChange}
+                onChange={(e) => handleDateChange(e, formik)}
               />
             </Grid>
 

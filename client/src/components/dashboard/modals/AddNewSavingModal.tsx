@@ -5,6 +5,7 @@ import {
   MenuItem,
   Modal,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
   useMediaQuery,
@@ -13,51 +14,56 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import { createNewExpense } from "@/api/createNewExpense";
+import * as Yup from "yup";
+import { createNewSaving } from "@/api/createNewSaving";
 import { currencies } from "@/lib/helpers/forms/currencies";
 import {
   handleCurrencyChange,
   handleDateChange,
-  handlePaymentTypeChange,
 } from "@/lib/helpers/forms/handleChanges";
-import { initialValues } from "@/lib/helpers/forms/initialValues";
-import { paymentTypes } from "@/lib/helpers/forms/paymentTypes";
-import { validationSchema } from "@/lib/helpers/forms/validationSchema";
-import { Currency, PaymentType } from "@/lib/types/Finances";
+import { Currency } from "@/lib/types/Finances";
 import { style } from "@/styles/modals";
 
-interface IAddNewExpenseModalProps {
+interface IAddNewSavingModalProps {
   open: boolean;
-  expenseCategory: string;
-  handleCloseModalWithNewExpense: () => void;
+  savingCategory: string;
+  handleCloseModalWithNewSaving: () => void;
   setOpenSnackbar: (arg: boolean) => void;
 }
 
-export const AddNewExpenseModal = ({
+export const AddNewSavingModal = ({
   open,
-  expenseCategory,
-  handleCloseModalWithNewExpense,
+  savingCategory,
+  handleCloseModalWithNewSaving,
   setOpenSnackbar,
-}: IAddNewExpenseModalProps) => {
+}: IAddNewSavingModalProps) => {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
 
   const {
-    mutate: createNewExpenseMutation,
+    mutate: createNewSavingMutation,
     isSuccess,
     isError,
     reset,
-  } = useMutation(createNewExpense);
+  } = useMutation(createNewSaving);
 
   const formik = useFormik({
-    initialValues: initialValues,
-    validationSchema: validationSchema,
+    initialValues: {
+      amount: 0,
+      currency: Currency.PLN,
+      date: "",
+    },
+    validationSchema: Yup.object({
+      amount: Yup.number().positive().required("This field is required"),
+      currency: Yup.string()
+        .oneOf(Object.values(Currency))
+        .required("This field is required"),
+    }),
     onSubmit: (values) => {
-      createNewExpenseMutation({
-        expenseCategory: expenseCategory,
+      createNewSavingMutation({
+        savingCategory: savingCategory,
         amount: values.amount,
         currency: Currency[values.currency],
         date: values.date,
-        paymentType: PaymentType[values.paymentType],
       });
     },
   });
@@ -66,21 +72,21 @@ export const AddNewExpenseModal = ({
     if (isSuccess) {
       formik.resetForm();
       reset();
-      handleCloseModalWithNewExpense();
+      handleCloseModalWithNewSaving();
       setOpenSnackbar(true);
     }
   }, [
     isSuccess,
     formik,
     reset,
-    handleCloseModalWithNewExpense,
+    handleCloseModalWithNewSaving,
     setOpenSnackbar,
   ]);
 
   return (
     <Modal
       open={open}
-      onClose={handleCloseModalWithNewExpense}
+      onClose={handleCloseModalWithNewSaving}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -89,7 +95,7 @@ export const AddNewExpenseModal = ({
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h5" textAlign="center">
-                Add a new expense
+                Add a new saving
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -129,27 +135,6 @@ export const AddNewExpenseModal = ({
               )}
             </Grid>
 
-            <Grid item xs={12}>
-              <Select
-                labelId="payment-select"
-                id="payment"
-                name="payment"
-                label="Payment Type"
-                onChange={(e) => handlePaymentTypeChange(e, formik)}
-                onBlur={formik.handleBlur}
-                value={formik.values.paymentType}
-                sx={{ width: "100%" }}
-              >
-                {paymentTypes.map((paymentType) => (
-                  <MenuItem key={paymentType} value={paymentType}>
-                    {paymentType}
-                  </MenuItem>
-                ))}
-              </Select>
-              {formik.errors.paymentType && formik.touched.paymentType && (
-                <div>{formik.errors.paymentType}</div>
-              )}
-            </Grid>
             <Grid item xs={12}>
               <DatePicker
                 value={formik.values.date}

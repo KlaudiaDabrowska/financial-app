@@ -33,6 +33,7 @@ export const ExpenseIncomeSwitchBtns = ({
         variant={`${newAmount === Finances.income ? "contained" : "outlined"}`}
         sx={{
           color: "#000",
+          mr: 2,
           border: 1,
           borderColor: "primary.main",
           fontWeight: "bold",
@@ -40,6 +41,18 @@ export const ExpenseIncomeSwitchBtns = ({
         onClick={() => handleToggleSwitch(Finances.income)}
       >
         Add income
+      </Button>
+      <Button
+        variant={`${newAmount === Finances.saving ? "contained" : "outlined"}`}
+        sx={{
+          color: "#000",
+          border: 1,
+          borderColor: "primary.main",
+          fontWeight: "bold",
+        }}
+        onClick={() => handleToggleSwitch(Finances.saving)}
+      >
+        Add saving
       </Button>
     </Box>
   );

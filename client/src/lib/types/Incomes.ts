@@ -9,7 +9,7 @@ export interface INewIncome {
 }
 
 export interface IIncomeObject {
-  id: number;
+  id: string;
   incomeType: string;
   amount: number;
   currency: Currency;
