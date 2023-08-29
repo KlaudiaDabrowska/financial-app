@@ -1,11 +1,14 @@
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { Card, Paper, Typography } from "@mui/material";
 import { useContext, useState } from "react";
+import { useGetExpenses } from "@/lib/hooks/useGetExpenses";
 import { DashboardFinancialView } from "@/lib/types/Finances";
 import { DashboardFinancialViewContext } from "@/utils/Providers";
 
 export const TotalExpense = () => {
   const financialViewContext = useContext(DashboardFinancialViewContext);
+
+  const { totalAmount } = useGetExpenses();
 
   return (
     <>
@@ -18,9 +21,17 @@ export const TotalExpense = () => {
       >
         <RemoveCircleOutlineIcon color="error" fontSize="medium" />
         <Typography variant="subtitle1">Total expense</Typography>
-        <Typography variant="h6" fontWeight="700">
-          $ 1,500,100,900
-        </Typography>
+        {totalAmount?.map((amount, index) => {
+          return (
+            <Typography
+              variant="h6"
+              fontWeight="700"
+              key={`${index}-${amount}`}
+            >
+              {amount.amount} {amount.currency}
+            </Typography>
+          );
+        })}
       </Card>
     </>
   );

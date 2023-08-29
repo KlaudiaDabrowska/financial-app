@@ -2,10 +2,10 @@ import {
   Box,
   Button,
   Grid,
+  InputAdornment,
   MenuItem,
   Modal,
   Select,
-  SelectChangeEvent,
   TextField,
   Typography,
   useMediaQuery,
@@ -15,9 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import { createNewIncome } from "@/api/createNewIncome";
-import { currencies } from "@/lib/helpers/forms/currencies";
 import {
-  handleCurrencyChange,
   handleDateChange,
   handlePaymentTypeChange,
 } from "@/lib/helpers/forms/handleChanges";
@@ -63,21 +61,6 @@ export const AddNewIncomeModal = ({
     },
   });
 
-  // const handleCurrencyChange = (e: SelectChangeEvent) => {
-  //   const value = e.target.value;
-  //   formik.setFieldValue("currency", value);
-  // };
-
-  // const handlePaymentTypeChange = (e: SelectChangeEvent) => {
-  //   const value = e.target.value;
-  //   formik.setFieldValue("paymentType", value);
-  // };
-
-  // const handleDateChange = (e: any) => {
-  //   const date = e.$d.toISOString();
-  //   formik.setFieldValue("date", date);
-  // };
-
   useEffect(() => {
     if (isSuccess) {
       formik.resetForm();
@@ -118,33 +101,16 @@ export const AddNewIncomeModal = ({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.amount}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">PLN</InputAdornment>
+                  ),
+                }}
               />
               {formik.errors.amount && formik.touched.amount && (
                 <div>{formik.errors.amount}</div>
               )}
             </Grid>
-            <Grid item xs={12}>
-              <Select
-                labelId="currency-select"
-                id="currency"
-                name="currency"
-                label="Currency"
-                onChange={(e) => handleCurrencyChange(e, formik)}
-                onBlur={formik.handleBlur}
-                value={formik.values.currency}
-                sx={{ width: "100%" }}
-              >
-                {currencies.map((currency) => (
-                  <MenuItem key={currency} value={currency}>
-                    {currency}
-                  </MenuItem>
-                ))}
-              </Select>
-              {formik.errors.currency && formik.touched.currency && (
-                <div>{formik.errors.currency}</div>
-              )}
-            </Grid>
-
             <Grid item xs={12}>
               <Select
                 labelId="payment-select"

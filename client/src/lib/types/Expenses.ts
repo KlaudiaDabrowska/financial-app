@@ -8,11 +8,28 @@ export interface INewExpense {
   paymentType: PaymentType;
 }
 
-export interface IExpenseObject {
+export interface IExpenseResponse {
+  expenses: IExpense[];
+  totalAmount: ITotalAmount[];
+  groupByCategories: IExpenseGroupByCategory[];
+}
+
+export interface IExpense {
   id: string;
   expenseCategory: string;
   amount: number;
   currency: Currency;
   date: string;
   paymentType: PaymentType;
+}
+
+export interface ITotalAmount {
+  currency: Currency;
+  amount: number;
+}
+
+export interface IExpenseGroupByCategory {
+  expenseCategory: string;
+  totalAmount: number;
+  currency: Currency;
 }

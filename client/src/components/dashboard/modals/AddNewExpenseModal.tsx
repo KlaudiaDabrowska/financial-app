@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Grid,
+  InputAdornment,
   MenuItem,
   Modal,
   Select,
@@ -14,9 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import { createNewExpense } from "@/api/createNewExpense";
-import { currencies } from "@/lib/helpers/forms/currencies";
 import {
-  handleCurrencyChange,
   handleDateChange,
   handlePaymentTypeChange,
 } from "@/lib/helpers/forms/handleChanges";
@@ -102,30 +101,14 @@ export const AddNewExpenseModal = ({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.amount}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">PLN</InputAdornment>
+                  ),
+                }}
               />
               {formik.errors.amount && formik.touched.amount && (
                 <div>{formik.errors.amount}</div>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <Select
-                labelId="currency-select"
-                id="currency"
-                name="currency"
-                label="Currency"
-                onChange={(e) => handleCurrencyChange(e, formik)}
-                onBlur={formik.handleBlur}
-                value={formik.values.currency}
-                sx={{ width: "100%" }}
-              >
-                {currencies.map((currency) => (
-                  <MenuItem key={currency} value={currency}>
-                    {currency}
-                  </MenuItem>
-                ))}
-              </Select>
-              {formik.errors.currency && formik.touched.currency && (
-                <div>{formik.errors.currency}</div>
               )}
             </Grid>
 
