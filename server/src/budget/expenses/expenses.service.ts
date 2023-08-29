@@ -11,26 +11,30 @@ export class ExpensesService {
   getExpenses() {
     const totalAmount = this.repo
       .createQueryBuilder('expense')
-      .select('SUM(expense.amount)', 'totalAmount')
+      .select('SUM(expense.amount)', 'amount')
+      .addSelect('expense.currency', 'currency')
       .where('expense.date >= :startDate', {
-        startDate: '2023-08-24T22:00:00.000Z',
+        startDate: '2023-08-23T22:00:00.000Z',
       })
       .andWhere('expense.date <= :endDate', {
         endDate: '2023-08-25T22:00:00.000Z',
       })
-      .getRawOne();
+      .groupBy('expense.currency')
+      .getRawMany();
 
     const groupByCategories = this.repo
       .createQueryBuilder('expense')
       .select('expense.expense_category', 'expenseCategory')
       .addSelect('SUM(expense.amount)', 'totalAmount')
+      .addSelect('expense.currency', 'currency')
       .where('expense.date >= :startDate', {
-        startDate: '2023-08-24T22:00:00.000Z',
+        startDate: '2023-08-23T22:00:00.000Z',
       })
       .andWhere('expense.date <= :endDate', {
         endDate: '2023-08-26T22:00:00.000Z',
       })
       .groupBy('expense.expense_category')
+      .addGroupBy('expense.currency')
       .getRawMany();
 
     const allExpenses = this.repo.find();
@@ -39,7 +43,7 @@ export class ExpensesService {
       (values) => {
         return {
           expenses: values[0],
-          ...values[1],
+          totalAmount: values[1],
           groupByCategories: values[2],
         };
       },
