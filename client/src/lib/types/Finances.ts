@@ -14,3 +14,10 @@ export enum Currency {
   USD = "USD",
   GBP = "GBP",
 }
+
+export enum DashboardFinancialView {
+  add = "add",
+  totalExpense = "totalExpense",
+  totalIncome = "totalIncome",
+  totalSaving = "totalSaving",
+}

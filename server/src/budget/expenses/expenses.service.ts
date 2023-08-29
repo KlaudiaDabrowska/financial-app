@@ -8,7 +8,7 @@ import { Expense } from './expenses.entity';
 export class ExpensesService {
   constructor(@InjectRepository(Expense) private repo: Repository<Expense>) {}
 
-  async getExpenses() {
+  getExpenses() {
     const totalAmount = this.repo
       .createQueryBuilder('expense')
       .select('SUM(expense.amount)', 'totalAmount')
