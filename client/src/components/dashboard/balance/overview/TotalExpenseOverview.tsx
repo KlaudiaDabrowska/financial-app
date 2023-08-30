@@ -1,5 +1,13 @@
-import { Card, CardContent, CardHeader } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  CircularProgress,
+  useTheme,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { ErrorInfo } from "@/components/common/ErrorInfo";
 import { useGetExpenses } from "@/lib/hooks/useGetExpenses";
 
 export const TotalExpenseOverview = () => {
@@ -45,7 +53,9 @@ export const TotalExpenseOverview = () => {
     },
   ];
 
-  const { groupByGivenTimeRange } = useGetExpenses();
+  const { allExpenses, isLoading, isError } = useGetExpenses();
+
+  const theme = useTheme();
 
   return (
     <Card
@@ -55,30 +65,47 @@ export const TotalExpenseOverview = () => {
         mx: { xs: 0, md: "auto" },
       }}
     >
-      <CardHeader title="Total expenses from x to y" />
-      {groupByGivenTimeRange && (
-        <CardContent>
-          <DataGrid
-            getRowId={(row) =>
-              row.totalAmount + row.currency + Math.floor(Math.random() * 1000)
-            }
-            rows={groupByGivenTimeRange}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                },
-              },
-            }}
-            pageSizeOptions={[5]}
-            checkboxSelection
-            disableRowSelectionOnClick
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress
             sx={{
-              "& .MuiDataGrid-columnHeaderTitle": { fontWeight: 800 },
+              color: theme.palette.primary.dark,
             }}
           />
-        </CardContent>
+        </Box>
+      ) : isError ? (
+        <ErrorInfo error="Oops. Something went wrong." />
+      ) : (
+        <>
+          <CardHeader title="Total expenses from x to y" />
+          {allExpenses && (
+            <CardContent>
+              <DataGrid
+                rows={allExpenses}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: {
+                      pageSize: 10,
+                    },
+                  },
+                }}
+                pageSizeOptions={[5]}
+                checkboxSelection
+                disableRowSelectionOnClick
+                sx={{
+                  "& .MuiDataGrid-columnHeaderTitle": { fontWeight: 800 },
+                }}
+              />
+            </CardContent>
+          )}
+        </>
       )}
     </Card>
   );

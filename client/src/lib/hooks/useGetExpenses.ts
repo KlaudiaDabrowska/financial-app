@@ -9,15 +9,12 @@ export const useGetExpenses = () => {
   } = useQuery(["expenses"], getExpenses);
 
   const totalAmount = expenses?.totalAmount;
-  const groupByCategories = expenses?.groupByCategories;
-  const groupByGivenTimeRange = expenses?.groupByGivenTimeRange;
+  const allExpenses = expenses?.expenses;
 
   return {
-    expenses,
-    isLoading,
+    allExpenses,
     totalAmount,
-    groupByCategories,
-    groupByGivenTimeRange,
+    isLoading,
     isError,
   };
 };

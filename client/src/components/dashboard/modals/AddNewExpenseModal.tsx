@@ -8,13 +8,13 @@ import {
   Select,
   TextField,
   Typography,
-  useMediaQuery,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import { createNewExpense } from "@/api/createNewExpense";
+import { ErrorInfo } from "@/components/common/ErrorInfo";
 import {
   handleDateChange,
   handlePaymentTypeChange,
@@ -106,7 +106,7 @@ export const AddNewExpenseModal = ({
                 }}
               />
               {formik.errors.amount && formik.touched.amount && (
-                <div>{formik.errors.amount}</div>
+                <ErrorInfo error={formik.errors.amount} />
               )}
             </Grid>
 
@@ -128,7 +128,7 @@ export const AddNewExpenseModal = ({
                 ))}
               </Select>
               {formik.errors.paymentType && formik.touched.paymentType && (
-                <div>{formik.errors.paymentType}</div>
+                <ErrorInfo error={formik.errors.paymentType} />
               )}
             </Grid>
             <Grid item xs={12}>
@@ -152,7 +152,7 @@ export const AddNewExpenseModal = ({
               </Button>
             </Grid>
             {isError && (
-              <div>Oops! Something went wrong. Please try again.</div>
+              <ErrorInfo error="Oops! Something went wrong. Please try again." />
             )}
           </Grid>
         </form>

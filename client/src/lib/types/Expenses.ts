@@ -11,8 +11,6 @@ export interface INewExpense {
 export interface IExpenseResponse {
   expenses: IExpense[];
   totalAmount: ITotalAmount[];
-  groupByCategories: IExpenseGroupByCategory[];
-  groupByGivenTimeRange: IExpenseGroupByCategory[];
 }
 
 export interface IExpense {
