@@ -10,6 +10,14 @@ export const useGetExpenses = () => {
 
   const totalAmount = expenses?.totalAmount;
   const groupByCategories = expenses?.groupByCategories;
+  const groupByGivenTimeRange = expenses?.groupByGivenTimeRange;
 
-  return { expenses, isLoading, totalAmount, groupByCategories, isError };
+  return {
+    expenses,
+    isLoading,
+    totalAmount,
+    groupByCategories,
+    groupByGivenTimeRange,
+    isError,
+  };
 };

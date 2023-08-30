@@ -12,6 +12,7 @@ export interface IExpenseResponse {
   expenses: IExpense[];
   totalAmount: ITotalAmount[];
   groupByCategories: IExpenseGroupByCategory[];
+  groupByGivenTimeRange: IExpenseGroupByCategory[];
 }
 
 export interface IExpense {
@@ -32,4 +33,12 @@ export interface IExpenseGroupByCategory {
   expenseCategory: string;
   totalAmount: number;
   currency: Currency;
+}
+
+export interface IExpenseGroupByGivenTimeRange {
+  expenseCategory: string;
+  amount: number;
+  currency: Currency;
+  date: string;
+  paymentType: PaymentType;
 }

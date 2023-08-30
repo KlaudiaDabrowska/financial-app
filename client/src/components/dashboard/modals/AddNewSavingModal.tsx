@@ -31,8 +31,6 @@ export const AddNewSavingModal = ({
   handleCloseModalWithNewSaving,
   setOpenSnackbar,
 }: IAddNewSavingModalProps) => {
-  const isSmallScreen = useMediaQuery("(max-width:600px)");
-
   const {
     mutate: createNewSavingMutation,
     isSuccess,

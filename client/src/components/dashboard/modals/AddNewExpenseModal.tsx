@@ -38,8 +38,6 @@ export const AddNewExpenseModal = ({
   handleCloseModalWithNewExpense,
   setOpenSnackbar,
 }: IAddNewExpenseModalProps) => {
-  const isSmallScreen = useMediaQuery("(max-width:600px)");
-
   const {
     mutate: createNewExpenseMutation,
     isSuccess,

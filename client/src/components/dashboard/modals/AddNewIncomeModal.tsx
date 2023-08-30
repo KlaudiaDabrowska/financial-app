@@ -38,8 +38,6 @@ export const AddNewIncomeModal = ({
   handleCloseModalWithNewIncome,
   setOpenSnackbar,
 }: IAddNewIncomeModalProps) => {
-  const isSmallScreen = useMediaQuery("(max-width:600px)");
-
   const {
     mutate: createNewIncomeMutation,
     isSuccess,
