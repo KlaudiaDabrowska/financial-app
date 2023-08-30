@@ -37,17 +37,36 @@ export class ExpensesService {
       .addGroupBy('expense.currency')
       .getRawMany();
 
+    const groupByGivenTimeRange = this.repo
+      .createQueryBuilder('expense')
+      .select('expense.expense_category', 'expenseCategory')
+      .addSelect('expense.amount', 'amount')
+      .addSelect('expense.currency', 'currency')
+      .addSelect('expense.date', 'date')
+      .addSelect('expense.payment_type', 'paymentType')
+      .where('expense.date >= :startDate', {
+        startDate: '2023-08-23T22:00:00.000Z',
+      })
+      .andWhere('expense.date <= :endDate', {
+        endDate: '2023-08-26T22:00:00.000Z',
+      })
+      .getRawMany();
+
     const allExpenses = this.repo.find();
 
-    return Promise.all([allExpenses, totalAmount, groupByCategories]).then(
-      (values) => {
-        return {
-          expenses: values[0],
-          totalAmount: values[1],
-          groupByCategories: values[2],
-        };
-      },
-    );
+    return Promise.all([
+      allExpenses,
+      totalAmount,
+      groupByCategories,
+      groupByGivenTimeRange,
+    ]).then((values) => {
+      return {
+        expenses: values[0],
+        totalAmount: values[1],
+        groupByCategories: values[2],
+        groupByGivenTimeRange: values[3],
+      };
+    });
   }
 
   getExpenseById(id: string) {
