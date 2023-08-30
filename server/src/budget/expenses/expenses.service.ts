@@ -22,28 +22,31 @@ export class ExpensesService {
       .groupBy('expense.currency')
       .getRawMany();
 
-    const groupByCategories = this.repo
-      .createQueryBuilder('expense')
-      .select('expense.expense_category', 'expenseCategory')
-      .addSelect('SUM(expense.amount)', 'totalAmount')
-      .addSelect('expense.currency', 'currency')
-      .where('expense.date >= :startDate', {
-        startDate: '2023-08-23T22:00:00.000Z',
-      })
-      .andWhere('expense.date <= :endDate', {
-        endDate: '2023-08-26T22:00:00.000Z',
-      })
-      .groupBy('expense.expense_category')
-      .addGroupBy('expense.currency')
-      .getRawMany();
+    //to separate endpoint
 
-    const groupByGivenTimeRange = this.repo
+    // const groupByCategories = this.repo
+    //   .createQueryBuilder('expense')
+    //   .select('expense.expense_category', 'expenseCategory')
+    //   .addSelect('SUM(expense.amount)', 'totalAmount')
+    //   .addSelect('expense.currency', 'currency')
+    //   .where('expense.date >= :startDate', {
+    //     startDate: '2023-08-23T22:00:00.000Z',
+    //   })
+    //   .andWhere('expense.date <= :endDate', {
+    //     endDate: '2023-08-26T22:00:00.000Z',
+    //   })
+    //   .groupBy('expense.expense_category')
+    //   .addGroupBy('expense.currency')
+    //   .getRawMany();
+
+    const allExpenses = this.repo
       .createQueryBuilder('expense')
       .select('expense.expense_category', 'expenseCategory')
       .addSelect('expense.amount', 'amount')
       .addSelect('expense.currency', 'currency')
       .addSelect('expense.date', 'date')
       .addSelect('expense.payment_type', 'paymentType')
+      .addSelect('expense.id', 'id')
       .where('expense.date >= :startDate', {
         startDate: '2023-08-23T22:00:00.000Z',
       })
@@ -52,19 +55,10 @@ export class ExpensesService {
       })
       .getRawMany();
 
-    const allExpenses = this.repo.find();
-
-    return Promise.all([
-      allExpenses,
-      totalAmount,
-      groupByCategories,
-      groupByGivenTimeRange,
-    ]).then((values) => {
+    return Promise.all([allExpenses, totalAmount]).then((values) => {
       return {
         expenses: values[0],
         totalAmount: values[1],
-        groupByCategories: values[2],
-        groupByGivenTimeRange: values[3],
       };
     });
   }
