@@ -1,4 +1,4 @@
-import { Currency, PaymentType } from "./Finances";
+import { Currency } from "./Finances";
 
 export interface INewSaving {
   savingCategory: string;
@@ -7,10 +7,20 @@ export interface INewSaving {
   date: string;
 }
 
-export interface ISavingObject {
+export interface ISavingResponse {
+  savings: ISaving[];
+  totalAmount: ITotalAmount[];
+}
+
+export interface ISaving {
   id: string;
   savingCategory: string;
   amount: number;
   currency: Currency;
   date: string;
+}
+
+export interface ITotalAmount {
+  amount: number;
+  currency: Currency;
 }

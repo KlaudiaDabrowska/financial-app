@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { BalancesSummary } from "@/components/dashboard/balance/BalancesSummary";
 import { TotalExpenseOverview } from "@/components/dashboard/balance/overview/TotalExpenseOverview";
 import { TotalIncomeOverview } from "@/components/dashboard/balance/overview/TotalIncomeOverview";
+import { TotalSavingOverview } from "@/components/dashboard/balance/overview/TotalSavingOverview";
 import { TotalBalanceHeader } from "@/components/dashboard/balance/TotalBalanceHeader";
 import { AddExpenseIncome } from "@/components/dashboard/newAmount/AddExpenseIncome";
 import { ExpenseIncomeSwitchBtns } from "@/components/dashboard/newAmount/ExpenseIncomeSwitchBtns";
@@ -40,7 +41,7 @@ export default function Dashboard() {
     },
     {
       view: DashboardFinancialView.totalSaving,
-      component: <div>totalSaving</div>,
+      component: <TotalSavingOverview />,
     },
   ];
 
