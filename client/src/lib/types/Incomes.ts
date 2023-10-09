@@ -8,11 +8,21 @@ export interface INewIncome {
   paymentType: PaymentType;
 }
 
-export interface IIncomeObject {
+export interface IIncomeResponse {
+  incomes: IIncome[];
+  totalAmount: ITotalAmount[];
+}
+
+export interface IIncome {
   id: string;
   incomeType: string;
   amount: number;
   currency: Currency;
   date: string;
   paymentType: PaymentType;
+}
+
+export interface ITotalAmount {
+  currency: Currency;
+  amount: number;
 }
